@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Nouvelle consultation</title>
+</head>
+<body>
+
+<form th:action="@{/consultations/save}" method="post" th:object="${consultation}">
+    <label for="description">Description</label>
+    <textarea id="description" th:field="*{description}"></textarea>
+    <br>
+    <label>Patient</label>
+    <select th:field="*{patient.id}">
+        <optio>Choisir un patient</optio>
+        <option  th:each="p : ${patients}"   th:text="${p.nom + ' ' + p.prenom}" th:value="${p.id}"></option>
+    </select>
+    <br>
+
+    <button type="submit">Enregistrer</button>
+    <button type="reset">Annuler</button>
+</form>
+
+<a th:href="@{/consultations}">Retour</a>
+
+</body>
+</html>

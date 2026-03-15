@@ -1,0 +1,32 @@
+<!doctype html>
+<html  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Consultations</title>
+</head>
+<body>
+<h3>Liste des consultations</h3>
+<a th:href="@{/consultations/new}">Nouvelle consulation</a>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Date</th>
+        <th>Description</th>
+        <th>Patient</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="c : ${consultations}">
+        <td th:text="${c.id}"></td>
+        <td th:text="${#dates.format(c.date, 'dd-MM-yyyy')}"></td>
+        <td th:text="${c.description}"></td>
+        <td th:text="${c.patient.nom}"></td>
+        <td><a th:href="@{/consultations/delete/{id} (id=${c.id})}">supprimer</a></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

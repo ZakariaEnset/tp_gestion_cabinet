@@ -14,7 +14,7 @@ import java.util.List;
 @Controller
 public class PatientController {
 
-    private IPatientService patientService;
+    private final IPatientService patientService;
 
     public PatientController(IPatientService patientService) {
         this.patientService = patientService;
