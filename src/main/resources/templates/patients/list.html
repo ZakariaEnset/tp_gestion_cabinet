@@ -1,34 +1,45 @@
-<!doctype html>
-<html  xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layouts/main :: layout(~{::main})}">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Document</title>
+    <title>Liste des patients</title>
 </head>
 <body>
+
+<main>
     <h3>Liste des patients</h3>
-    <a th:href="@{/patients/new}">Nouveau patient</a>
-    <table>
+    <a th:href="@{/patients/new}" class="btn btn-primary mb-3">Nouveau patient</a>
+
+    <table class="table table-bordered">
         <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nom</th>
-                <th>Prenom</th>
-                <th>Tel</th>
-                <th>Email</th>
-                <th>Actions</th>
-            </tr>
+        <tr>
+            <th>ID</th>
+            <th>Nom</th>
+            <th>Prénom</th>
+            <th>Tel</th>
+            <th>Email</th>
+            <th>Actions</th>
+        </tr>
         </thead>
         <tbody>
-            <tr th:each="p : ${patients}">
-                <td th:text="${p.id}"></td>
-                <td th:text="${p.nom}"></td>
-                <td th:text="${p.prenom}"></td>
-                <td th:text="${p.tel}"></td>
-                <td th:text="${p.email}"></td>
-                <td><a th:href="@{/patients/delete/{id} (id=${p.id})}">supprimer</a></td>
-            </tr>
+        <tr th:each="p : ${patients}">
+            <td th:text="${p.id}"></td>
+            <td th:text="${p.nom}"></td>
+            <td th:text="${p.prenom}"></td>
+            <td th:text="${p.tel}"></td>
+            <td th:text="${p.email}"></td>
+            <td>
+                <a th:href="@{/patients/edit/{id}(id=${p.id})}"
+                   class="btn btn-warning btn-sm"><i class="bi bi-pencil"></i> Modifier</a>
+
+                <a th:href="@{/patients/delete/{id}(id=${p.id})}"
+                   class="btn btn-danger btn-sm"
+                   onclick="return confirm('Êtes-vous sûr ?')"><i class="bi bi-trash"></i> Supprimer</a>
+            </td>
+        </tr>
         </tbody>
     </table>
+</main>
+
 </body>
 </html>

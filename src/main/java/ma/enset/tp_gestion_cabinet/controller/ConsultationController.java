@@ -1,8 +1,6 @@
 package ma.enset.tp_gestion_cabinet.controller;
 
 import ma.enset.tp_gestion_cabinet.entity.Consultation;
-import ma.enset.tp_gestion_cabinet.entity.Patient;
-import ma.enset.tp_gestion_cabinet.service.ConsultationService;
 import ma.enset.tp_gestion_cabinet.service.IConsultationService;
 import ma.enset.tp_gestion_cabinet.service.IPatientService;
 import org.springframework.stereotype.Controller;
@@ -41,13 +39,13 @@ public class ConsultationController {
 
     @PostMapping("/consultations/save")
     public String sauvegarderConsultation(@ModelAttribute("consultation") Consultation consultation){
-        consultationService.ajouterConsultation(consultation);
+        consultationService.addConsultation(consultation);
         return "redirect:/consultations";
     }
 
     @GetMapping("/consultations/delete/{id}")
     public String supprimerConsultation(@PathVariable("id") long id) {
-        consultationService.supprimerConsultation(id);
+        consultationService.deleteConsultation(id);
         return "redirect:/consultations";
     }
 

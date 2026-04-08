@@ -1,34 +1,45 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/main :: layout(~{::main})}">
 
 <head>
-    <meta charset="UTF-8">
     <title>Nouveau patient</title>
 </head>
+
 <body>
+    <main>
+        <form class="form" th:action="@{/patients/save}" method="post" th:object="${patient}">
 
-<form th:action="@{/patients/save}" method="post" th:object="${patient}">
-    <label for="nom">Nom</label>
-    <input type="text" id="nom" th:field="*{nom}">
-    <br>
+            <div class="form-group">
+                <label for="nom">Nom</label>
+                <input class="form-control" type="text" id="nom" th:field="*{nom}" th:classappend="${#fields.hasErrors('nom')} ? 'is-invalid'">
+                <div  th:if="${#fields.hasErrors('nom')}" th:errors="*{nom}" class="invalid-feedback"></div>
+            </div>
 
-    <label for="prenom">Prénom</label>
-    <input type="text" id="prenom" th:field="*{prenom}">
-    <br>
+            <div class="form-group">
+                <label for="prenom">Prénom</label>
+                <input class="form-control" type="text" id="prenom" th:field="*{prenom}" th:classappend="${#fields.hasErrors('prenom')} ? 'is-invalid'">
+                <div  th:if="${#fields.hasErrors('prenom')}" th:errors="*{prenom}" class="invalid-feedback"></div>
+            </div>
 
-    <label for="tel">Tel</label>
-    <input type="tel" id="tel" th:field="*{tel}">
-    <br>
+            <div class="form-group">
+                <label for="tel">Tel</label>
+                <input class="form-control" type="tel" id="tel" th:field="*{tel}" th:classappend="${#fields.hasErrors('tel')} ? 'is-invalid'">
+                <div  th:if="${#fields.hasErrors('tel')}" th:errors="*{tel}" class="invalid-feedback"></div>
 
-    <label for="email">Email</label>
-    <input type="email" id="email" th:field="*{email}">
-    <br>
+            </div>
 
-    <button type="submit">Enregistrer</button>
-    <button type="reset">Annuler</button>
-</form>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input class="form-control" type="email" id="email" th:field="*{email}">
+            </div>
 
-<a th:href="@{/patients}">Retour</a>
+            <input type="hidden" name="id" th:field="*{id}">
+            <button class="btn btn-sm btn-primary" type="submit">Enregistrer</button>
+            <button class="btn btn-sm btn-secondary" type="reset">Effacer</button>
+        </form>
 
+        <a class="btn btn-sm btn-outline-info mt-3" th:href="@{/patients}">Retour</a>
+    </main>
 </body>
+
 </html>

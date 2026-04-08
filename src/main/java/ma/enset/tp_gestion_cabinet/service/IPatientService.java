@@ -6,7 +6,8 @@ import java.util.List;
 
 public interface IPatientService
 {
-    void ajouterPatient(Patient patient);
-    void supprimerPatient(long id);
+    Patient getPatientById(long id);
+    Patient savePatient(Patient patient);
+    void deletePatient(long id);
     List<Patient> findAllPatients();
 }

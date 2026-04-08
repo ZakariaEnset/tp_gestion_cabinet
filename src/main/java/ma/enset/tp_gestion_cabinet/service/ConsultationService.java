@@ -16,13 +16,13 @@ public class ConsultationService implements IConsultationService{
         this.consultationRepository = consultationRepository;
     }
     @Override
-    public void ajouterConsultation(Consultation consultation) {
+    public void addConsultation(Consultation consultation) {
         consultation.setDate(Date.valueOf(LocalDate.now()));
         consultationRepository.save(consultation);
     }
 
     @Override
-    public void supprimerConsultation(long id) {
+    public void deleteConsultation(long id) {
         consultationRepository.deleteById(id);
     }
 
