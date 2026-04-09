@@ -1,28 +1,34 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layouts/main :: layout(~{::main})}">
 
 <head>
     <meta charset="UTF-8">
     <title>Nouvelle consultation</title>
 </head>
 <body>
+<main>
+    <form th:action="@{/consultations/save}" method="post" th:object="${consultation}">
+        <div class="form-group">
+            <label for="description">Description</label>
+            <textarea class="form-control" id="description" th:field="*{description}" th:classappend="${#fields.hasErrors('description')} ? 'is-invalid'"></textarea>
+            <div  th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="invalid-feedback"></div>
+        </div>
 
-<form th:action="@{/consultations/save}" method="post" th:object="${consultation}">
-    <label for="description">Description</label>
-    <textarea id="description" th:field="*{description}"></textarea>
-    <br>
-    <label>Patient</label>
-    <select th:field="*{patient.id}">
-        <optio>Choisir un patient</optio>
-        <option  th:each="p : ${patients}"   th:text="${p.nom + ' ' + p.prenom}" th:value="${p.id}"></option>
-    </select>
-    <br>
+        <div class="form-group">
+            <label for="patient">Patient</label>
+            <select id="patient" class="form-select" th:field="*{patient.id}" th:classappend="${#fields.hasErrors('patient.id')} ? 'is-invalid'">
+                <option value="-1">Choisir un patient</option>
+                <option th:each="p : ${patients}" th:text="${p.nom + ' ' + p.prenom}" th:value="${p.id}"></option>
+            </select>
+            <div  th:if="${#fields.hasErrors('patient.id')}" th:errors="*{patient.id}" class="invalid-feedback"></div>
+        </div>
 
-    <button type="submit">Enregistrer</button>
-    <button type="reset">Annuler</button>
-</form>
+        <input type="hidden" name="id" th:field="*{id}">
+        <button class="btn btn-sm btn-primary" type="submit">Enregistrer</button>
+        <button class="btn btn-sm btn-secondary" type="reset">Effacer</button>
+    </form>
 
-<a th:href="@{/consultations}">Retour</a>
-
+    <a class="btn btn-sm btn-outline-info mt-3" th:href="@{/consultations}">Retour</a>
+</main>
 </body>
 </html>

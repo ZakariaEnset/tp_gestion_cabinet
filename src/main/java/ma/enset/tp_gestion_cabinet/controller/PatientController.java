@@ -38,7 +38,6 @@ public class PatientController {
     @PostMapping("/patients/save")
     public String savePatient(@Valid @ModelAttribute("patient") Patient patient, BindingResult bindingResult){
         if (bindingResult.hasErrors()) {
-            System.err.println(bindingResult.getAllErrors());
             return "patients/form";
         }
         patientService.savePatient(patient);

@@ -1,14 +1,16 @@
-<!doctype html>
-<html  xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layouts/main :: layout(~{::main})}">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Consultations</title>
+    <title>Liste des consultations</title>
 </head>
 <body>
-<h3>Liste des consultations</h3>
-<a th:href="@{/consultations/new}">Nouvelle consulation</a>
-<table>
+
+<main>
+    <h3>Liste des consultations</h3>
+    <a th:href="@{/consultations/new}" class="btn btn-primary mb-3">Nouvelle consultation</a>
+
+<table  class="table table-bordered">
     <thead>
     <tr>
         <th>ID</th>
@@ -24,7 +26,15 @@
         <td th:text="${#dates.format(c.date, 'dd-MM-yyyy')}"></td>
         <td th:text="${c.description}"></td>
         <td th:text="${c.patient.nom}"></td>
-        <td><a th:href="@{/consultations/delete/{id} (id=${c.id})}">supprimer</a></td>
+        <td>
+
+            <a th:href="@{/consultations/edit/{id}(id=${c.id})}"
+               class="btn btn-warning btn-sm"><i class="bi bi-pencil"></i> Modifier</a>
+
+            <a th:href="@{/consultations/delete/{id} (id=${c.id})}"
+               class="btn btn-danger btn-sm"
+               onclick="return confirm('Êtes-vous sûr ?')"><i class="bi bi-trash"></i> Supprimer</a>
+        </td>
     </tr>
     </tbody>
 </table>

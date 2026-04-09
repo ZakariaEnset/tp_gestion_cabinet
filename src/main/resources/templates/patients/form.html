@@ -30,7 +30,8 @@
 
             <div class="form-group">
                 <label for="email">Email</label>
-                <input class="form-control" type="email" id="email" th:field="*{email}">
+                <input class="form-control" type="email" id="email" th:field="*{email}" th:classappend="${#fields.hasErrors('email')} ? 'is-invalid'">
+                <div  th:if="${#fields.hasErrors('email')}" th:errors="*{tel}" class="invalid-feedback"></div>
             </div>
 
             <input type="hidden" name="id" th:field="*{id}">

@@ -15,6 +15,12 @@ public class ConsultationService implements IConsultationService{
     public ConsultationService(ConsultationRepository consultationRepository){
         this.consultationRepository = consultationRepository;
     }
+
+    @Override
+    public Consultation getConsultationById(long id) {
+        return consultationRepository.findById(id).get();
+    }
+
     @Override
     public void addConsultation(Consultation consultation) {
         consultation.setDate(Date.valueOf(LocalDate.now()));
@@ -29,5 +35,10 @@ public class ConsultationService implements IConsultationService{
     @Override
     public List<Consultation> findAllConsultations() {
         return consultationRepository.findAll();
+    }
+
+    @Override
+    public List<Consultation> findConsultationsByPatientId(long patientId) {
+        return consultationRepository.findByPatientId(patientId);
     }
 }

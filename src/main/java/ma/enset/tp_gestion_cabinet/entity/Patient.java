@@ -1,6 +1,7 @@
 package ma.enset.tp_gestion_cabinet.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 
@@ -31,6 +32,7 @@ public class Patient {
     @Column(length = 20)
     private String tel;
 
+    @Email(message = "Veuillez fournir une adresse courriel valide")
     @Column(length = 50)
     private String email;
 
