@@ -5,6 +5,7 @@ import ma.enset.tp_gestion_cabinet.entity.Consultation;
 import ma.enset.tp_gestion_cabinet.entity.Patient;
 import ma.enset.tp_gestion_cabinet.service.IConsultationService;
 import ma.enset.tp_gestion_cabinet.service.IPatientService;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -24,13 +25,22 @@ public class ConsultationController {
     }
 
     @GetMapping("/consultations")
-    public String listeConsultations(Model model, @RequestParam(value = "patient", required = false) Long patientId) {
-        List<Consultation> consultations = null;
-        if (patientId != null) {
-            consultations = consultationService.findConsultationsByPatientId(patientId);
-        } else {
-            consultations = consultationService.findAllConsultations();
-        }
+    public String listeConsultations(@RequestParam(value = "page", defaultValue = "1") int page,
+                                     @RequestParam(value = "sortField", defaultValue = "date") String sortField,
+                                     @RequestParam(value = "sortDir", defaultValue = "asc") String sortDir,
+                                     @RequestParam(value = "patient", required = false, defaultValue = "0") long patientId,
+                                     Model model) {
+
+        int pageSize = 5;
+
+        Page<Consultation> pageConsultations = consultationService.findAllConsultationPaginatedAndSorted(patientId, page, pageSize, sortField, sortDir);
+        List<Consultation> consultations = pageConsultations.getContent();
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", pageConsultations.getTotalPages());
+        model.addAttribute("totalItems", pageConsultations.getTotalElements());
+        model.addAttribute("sortField", sortField);
+        model.addAttribute("sortDir", sortDir);
+        model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
 
         model.addAttribute("consultations", consultations);
         return "consultations/list";
@@ -54,7 +64,7 @@ public class ConsultationController {
     }
 
     @GetMapping("/consultations/edit/{id}")
-    public String editConsultation(Model model, @PathVariable("id") long id){
+    public String editConsultation(Model model, @PathVariable("id") long id) {
         Consultation consultation = consultationService.getConsultationById(id);
         model.addAttribute("consultation", consultation);
         model.addAttribute("patients", patientService.findAllPatients());

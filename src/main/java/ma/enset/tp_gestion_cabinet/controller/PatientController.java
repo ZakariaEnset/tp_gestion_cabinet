@@ -3,13 +3,12 @@ package ma.enset.tp_gestion_cabinet.controller;
 import jakarta.validation.Valid;
 import ma.enset.tp_gestion_cabinet.entity.Patient;
 import ma.enset.tp_gestion_cabinet.service.IPatientService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,8 +22,22 @@ public class PatientController {
     }
 
     @GetMapping("/patients")
-    public String listePatients(Model model){
-        List<Patient> patiens = patientService.findAllPatients();
+    public String listePatients(@RequestParam(value = "page", defaultValue = "1") int page,
+                                @RequestParam(value = "sortField", defaultValue = "nom") String sortField,
+                                @RequestParam(value = "sortDir", defaultValue = "asc") String sortDir,
+                                Model model){
+
+        int pageSize = 5;
+
+        Page<Patient> pagePatients = patientService.findAllPatientsPaginatedAndSorted(page, pageSize, sortField, sortDir);
+        List<Patient> patiens = pagePatients.getContent();
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", pagePatients.getTotalPages());
+        model.addAttribute("totalItems", pagePatients.getTotalElements());
+        model.addAttribute("sortField", sortField);
+        model.addAttribute("sortDir", sortDir);
+        model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
+
         model.addAttribute("patients", patiens);
         return "patients/list";
     }
