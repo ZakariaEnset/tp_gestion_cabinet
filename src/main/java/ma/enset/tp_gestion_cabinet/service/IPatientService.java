@@ -13,4 +13,5 @@ public interface IPatientService
     void deletePatient(long id);
     List<Patient> findAllPatients();
     Page<Patient> findAllPatientsPaginatedAndSorted(int page, int size, String sortField, String sortDirection);
+    long getCountPatients();
 }

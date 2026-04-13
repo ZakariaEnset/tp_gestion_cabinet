@@ -4,7 +4,6 @@ import jakarta.validation.Valid;
 import ma.enset.tp_gestion_cabinet.entity.Patient;
 import ma.enset.tp_gestion_cabinet.service.IPatientService;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;

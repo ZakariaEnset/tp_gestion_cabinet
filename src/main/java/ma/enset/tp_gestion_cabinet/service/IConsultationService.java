@@ -13,4 +13,5 @@ public interface IConsultationService {
     List<Consultation> findAllConsultations();
     List<Consultation> findConsultationsByPatientId(long patientId);
     Page<Consultation> findAllConsultationPaginatedAndSorted(long patientId, int page, int size, String sortField, String sortDirection);
+    long getCountConsultations();
 }

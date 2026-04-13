@@ -58,4 +58,9 @@ public class ConsultationService implements IConsultationService{
         }
         return consultationRepository.findAll(pageable);
     }
+
+    @Override
+    public long getCountConsultations() {
+        return consultationRepository.count();
+    }
 }

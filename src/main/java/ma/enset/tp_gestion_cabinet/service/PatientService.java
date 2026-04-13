@@ -50,4 +50,9 @@ public class PatientService implements IPatientService{
 
         return patientRepository.findAll(pageable);
     }
+
+    @Override
+    public long getCountPatients() {
+        return patientRepository.count();
+    }
 }
